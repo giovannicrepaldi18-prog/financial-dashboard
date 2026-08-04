@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Financial Dashboard</title>
+  <meta name="description" content="Daily Yahoo Finance and FRED financial dashboard">
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.5.4/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --background: #08111f;
+      --panel: #111d2d;
+      --panel-2: #162438;
+      --border: #26364c;
+      --text: #f5f7fb;
+      --muted: #9cafc4;
+      --positive: #4ade80;
+      --negative: #fb7185;
+      --accent: #5ba7ff;
+      --accent-2: #a78bfa;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.24);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(91, 167, 255, 0.14), transparent 32%),
+        radial-gradient(circle at 90% 0%, rgba(167, 139, 250, 0.12), transparent 28%),
+        var(--background);
+      color: var(--text);
+    }
+
+    .shell {
+      width: min(1440px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 30px 0 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      letter-spacing: -0.05em;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .subtitle, .updated {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .updated {
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .kpi-card, .panel {
+      background: linear-gradient(180deg, rgba(22, 36, 56, 0.95), rgba(17, 29, 45, 0.96));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-card {
+      padding: 18px;
+      min-height: 132px;
+    }
+
+    .kpi-label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      margin: 12px 0 8px;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .change {
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+
+    .positive { color: var(--positive); }
+    .negative { color: var(--negative); }
+    .neutral { color: var(--muted); }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      padding: 20px;
+      min-width: 0;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.05rem;
+      letter-spacing: -0.015em;
+    }
+
+    select {
+      max-width: 220px;
+      padding: 9px 34px 9px 11px;
+      color: var(--text);
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: inherit;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 340px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th:first-child, td:first-child,
+    th:nth-child(2), td:nth-child(2) {
+      text-align: left;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .empty {
+      padding: 30px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .error-banner {
+      display: none;
+      margin-bottom: 16px;
+      padding: 13px 16px;
+      color: #fecdd3;
+      background: rgba(159, 18, 57, 0.25);
+      border: 1px solid rgba(251, 113, 133, 0.5);
+      border-radius: 12px;
+    }
+
+    footer {
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    @media (max-width: 1000px) {
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chart-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .shell { width: min(100% - 20px, 1440px); padding-top: 20px; }
+      header { align-items: flex-start; flex-direction: column; }
+      .updated { text-align: left; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .panel-header { align-items: flex-start; flex-direction: column; }
+      select { width: 100%; max-width: none; }
+      .chart-wrap { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <p class="eyebrow">Markets + Macro</p>
+        <h1>Financial Dashboard</h1>
+        <p class="subtitle">Daily market prices and economic indicators</p>
+      </div>
+      <p class="updated" id="lastUpdated">Loading latest refresh…</p>
+    </header>
+
+    <div class="error-banner" id="errorBanner"></div>
+
+    <section class="kpi-grid" id="kpiGrid" aria-label="Market summary">
+      <div class="kpi-card"><div class="kpi-label">Loading</div></div>
+    </section>
+
+    <section class="chart-grid">
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Market Price</h2>
+          <select id="marketSelect" aria-label="Choose a market series"></select>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="marketChart"></canvas>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-header">
+          <h2>Economic Indicator</h2>
+          <select id="fredSelect" aria-label="Choose a FRED series"></select>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="fredChart"></canvas>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Latest Observations</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Series</th>
+              <th>Date</th>
+              <th>Value</th>
+              <th>Change</th>
+              <th>Change %</th>
+            </tr>
+          </thead>
+          <tbody id="snapshotBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      Market data is obtained through yfinance. Economic data is obtained from FRED.
+    </footer>
+  </main>
+
+  <script>
+    Chart.defaults.color = "#9cafc4";
+    Chart.defaults.borderColor = "rgba(156, 175, 196, 0.14)";
+    Chart.defaults.font.family = 'Inter, ui-sans-serif, system-ui, sans-serif';
+
+    let marketRows = [];
+    let fredRows = [];
+    let snapshotRows = [];
+    let marketChart;
+    let fredChart;
+
+    const compactNumber = new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      maximumFractionDigits: 2
+    });
+
+    function csvNumber(value) {
+      const number = Number(value);
+      return Number.isFinite(number) ? number : null;
+    }
+
+    async function loadCsv(path) {
+      const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Could not load ${path} (${response.status})`);
+      const text = await response.text();
+      const result = Papa.parse(text, {
+        header: true,
+        dynamicTyping: true,
+        skipEmptyLines: true
+      });
+      if (result.errors.length) console.warn(`CSV warnings for ${path}:`, result.errors);
+      return result.data;
+    }
+
+    async function loadJson(path) {
+      const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Could not load ${path} (${response.status})`);
+      return response.json();
+    }
+
+    function formatMarketValue(value) {
+      return value == null ? "—" : `$${Number(value).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
+    }
+
+    function formatGeneralValue(value) {
+      if (value == null) return "—";
+      const number = Number(value);
+      if (Math.abs(number) >= 1000000) return compactNumber.format(number);
+      return number.toLocaleString("en-US", { maximumFractionDigits: 3 });
+    }
+
+    function changeClass(value) {
+      if (value > 0) return "positive";
+      if (value < 0) return "negative";
+      return "neutral";
+    }
+
+    function signed(value, decimals = 2, suffix = "") {
+      const number = Number(value);
+      if (!Number.isFinite(number)) return "—";
+      const sign = number > 0 ? "+" : "";
+      return `${sign}${number.toFixed(decimals)}${suffix}`;
+    }
+
+    function setSelectOptions(select, values, labelBuilder) {
+      select.innerHTML = "";
+      values.forEach(value => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = labelBuilder(value);
+        select.appendChild(option);
+      });
+    }
+
+    function renderKpis() {
+      const grid = document.getElementById("kpiGrid");
+      const markets = snapshotRows.filter(row => row.Source === "Yahoo").slice(0, 4);
+
+      if (!markets.length) {
+        grid.innerHTML = '<div class="kpi-card empty">No market snapshot data is available.</div>';
+        return;
+      }
+
+      grid.innerHTML = markets.map(row => `
+        <article class="kpi-card">
+          <div class="kpi-label">${row.SeriesID} · ${row.Name}</div>
+          <div class="kpi-value">${formatMarketValue(row.LatestValue)}</div>
+          <div class="change ${changeClass(row.Change)}">
+            ${signed(row.Change)} · ${signed(row.ChangePct, 2, "%")}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function makeLineChart(canvasId, labels, values, label, accent) {
+      return new Chart(document.getElementById(canvasId), {
+        type: "line",
+        data: {
+          labels,
+          datasets: [{
+            label,
+            data: values,
+            borderColor: accent,
+            backgroundColor: accent,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            borderWidth: 2,
+            tension: 0.15
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: "index",
+            intersect: false
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: "#08111f",
+              borderColor: "#26364c",
+              borderWidth: 1,
+              displayColors: false
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                maxTicksLimit: 8,
+                maxRotation: 0
+              }
+            },
+            y: {
+              beginAtZero: false,
+              ticks: {
+                callback: value => compactNumber.format(value)
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderMarketChart() {
+      const symbol = document.getElementById("marketSelect").value;
+      const selected = marketRows
+        .filter(row => row.Ticker === symbol)
+        .sort((a, b) => String(a.Date).localeCompare(String(b.Date)))
+        .slice(-750);
+
+      if (marketChart) marketChart.destroy();
+      marketChart = makeLineChart(
+        "marketChart",
+        selected.map(row => row.Date),
+        selected.map(row => csvNumber(row.AdjClose)),
+        symbol,
+        "#5ba7ff"
+      );
+    }
+
+    function renderFredChart() {
+      const seriesId = document.getElementById("fredSelect").value;
+      const selected = fredRows
+        .filter(row => row.SeriesID === seriesId)
+        .sort((a, b) => String(a.Date).localeCompare(String(b.Date)))
+        .slice(-750);
+
+      if (fredChart) fredChart.destroy();
+      fredChart = makeLineChart(
+        "fredChart",
+        selected.map(row => row.Date),
+        selected.map(row => csvNumber(row.Value)),
+        seriesId,
+        "#a78bfa"
+      );
+    }
+
+    function renderSnapshotTable() {
+      const body = document.getElementById("snapshotBody");
+
+      if (!snapshotRows.length) {
+        body.innerHTML = '<tr><td colspan="6" class="empty">No snapshot data is available.</td></tr>';
+        return;
+      }
+
+      body.innerHTML = snapshotRows.map(row => {
+        const isMarket = row.Source === "Yahoo";
+        return `
+          <tr>
+            <td>${row.Source}</td>
+            <td><strong>${row.SeriesID}</strong> · ${row.Name}</td>
+            <td>${row.LatestDate}</td>
+            <td>${isMarket ? formatMarketValue(row.LatestValue) : formatGeneralValue(row.LatestValue)}</td>
+            <td class="${changeClass(row.Change)}">${signed(row.Change, 3)}</td>
+            <td class="${changeClass(row.ChangePct)}">${signed(row.ChangePct, 2, "%")}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    async function initialize() {
+      try {
+        const [market, fred, snapshot, metadata] = await Promise.all([
+          loadCsv("data/market_data.csv"),
+          loadCsv("data/fred_data.csv"),
+          loadCsv("data/latest_snapshot.csv"),
+          loadJson("data/last_updated.json")
+        ]);
+
+        marketRows = market;
+        fredRows = fred;
+        snapshotRows = snapshot;
+
+        const updated = metadata.updated_at_utc
+          ? new Date(metadata.updated_at_utc).toLocaleString("en-US", {
+              dateStyle: "medium",
+              timeStyle: "short",
+              timeZone: "America/New_York"
+            })
+          : "Not yet refreshed";
+        document.getElementById("lastUpdated").textContent = `Last updated: ${updated} ET`;
+
+        const marketSymbols = [...new Set(marketRows.map(row => row.Ticker).filter(Boolean))];
+        const fredSeries = [...new Set(fredRows.map(row => row.SeriesID).filter(Boolean))];
+
+        setSelectOptions(
+          document.getElementById("marketSelect"),
+          marketSymbols,
+          symbol => symbol
+        );
+
+        setSelectOptions(
+          document.getElementById("fredSelect"),
+          fredSeries,
+          seriesId => {
+            const row = fredRows.find(item => item.SeriesID === seriesId);
+            return row ? `${seriesId} · ${row.SeriesName}` : seriesId;
+          }
+        );
+
+        renderKpis();
+        renderSnapshotTable();
+
+        if (marketSymbols.length) renderMarketChart();
+        if (fredSeries.length) renderFredChart();
+
+        document.getElementById("marketSelect").addEventListener("change", renderMarketChart);
+        document.getElementById("fredSelect").addEventListener("change", renderFredChart);
+      } catch (error) {
+        console.error(error);
+        const banner = document.getElementById("errorBanner");
+        banner.style.display = "block";
+        banner.textContent =
+          "Dashboard data has not been generated yet, or a CSV could not be loaded. " +
+          "Run the GitHub Actions workflow after adding the FRED_API_KEY secret.";
+        document.getElementById("lastUpdated").textContent = "Data unavailable";
+      }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
