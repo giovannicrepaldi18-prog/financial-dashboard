@@ -1,4 +1,7 @@
 {
-  "status": "not yet run",
-  "updated_at_utc": null
+  "updated_at_utc": "2026-08-04T01:25:26.851422+00:00",
+  "updated_at_new_york": "2026-08-03T21:25:26.851422-04:00",
+  "market_rows": 17473,
+  "fred_rows": 8331,
+  "status": "success"
 }
