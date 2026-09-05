@@ -136,6 +136,7 @@ Date,SeriesID,SeriesName,Value
 2026-04-01,CPIAUCSL,Consumer Price Index,332.407
 2026-05-01,CPIAUCSL,Consumer Price Index,333.979
 2026-06-01,CPIAUCSL,Consumer Price Index,332.568
+2026-07-01,CPIAUCSL,Consumer Price Index,332.813
 2015-01-02,DGS10,10-Year Treasury Yield,2.12
 2015-01-05,DGS10,10-Year Treasury Yield,2.04
 2015-01-06,DGS10,10-Year Treasury Yield,1.97
@@ -3033,6 +3034,29 @@ Date,SeriesID,SeriesName,Value
 2026-07-30,DGS10,10-Year Treasury Yield,4.68
 2026-07-31,DGS10,10-Year Treasury Yield,4.75
 2026-08-03,DGS10,10-Year Treasury Yield,4.7
+2026-08-04,DGS10,10-Year Treasury Yield,4.63
+2026-08-05,DGS10,10-Year Treasury Yield,4.63
+2026-08-06,DGS10,10-Year Treasury Yield,4.69
+2026-08-07,DGS10,10-Year Treasury Yield,4.65
+2026-08-10,DGS10,10-Year Treasury Yield,4.72
+2026-08-11,DGS10,10-Year Treasury Yield,4.7
+2026-08-12,DGS10,10-Year Treasury Yield,4.68
+2026-08-13,DGS10,10-Year Treasury Yield,4.63
+2026-08-14,DGS10,10-Year Treasury Yield,4.68
+2026-08-17,DGS10,10-Year Treasury Yield,4.72
+2026-08-18,DGS10,10-Year Treasury Yield,4.71
+2026-08-19,DGS10,10-Year Treasury Yield,4.65
+2026-08-20,DGS10,10-Year Treasury Yield,4.69
+2026-08-21,DGS10,10-Year Treasury Yield,4.74
+2026-08-24,DGS10,10-Year Treasury Yield,4.7
+2026-08-25,DGS10,10-Year Treasury Yield,4.64
+2026-08-26,DGS10,10-Year Treasury Yield,4.66
+2026-08-27,DGS10,10-Year Treasury Yield,4.67
+2026-08-28,DGS10,10-Year Treasury Yield,4.73
+2026-08-31,DGS10,10-Year Treasury Yield,4.75
+2026-09-01,DGS10,10-Year Treasury Yield,4.79
+2026-09-02,DGS10,10-Year Treasury Yield,4.79
+2026-09-03,DGS10,10-Year Treasury Yield,4.77
 2015-01-02,DGS2,2-Year Treasury Yield,0.66
 2015-01-05,DGS2,2-Year Treasury Yield,0.68
 2015-01-06,DGS2,2-Year Treasury Yield,0.65
@@ -5930,6 +5954,29 @@ Date,SeriesID,SeriesName,Value
 2026-07-30,DGS2,2-Year Treasury Yield,4.23
 2026-07-31,DGS2,2-Year Treasury Yield,4.28
 2026-08-03,DGS2,2-Year Treasury Yield,4.25
+2026-08-04,DGS2,2-Year Treasury Yield,4.2
+2026-08-05,DGS2,2-Year Treasury Yield,4.18
+2026-08-06,DGS2,2-Year Treasury Yield,4.25
+2026-08-07,DGS2,2-Year Treasury Yield,4.19
+2026-08-10,DGS2,2-Year Treasury Yield,4.25
+2026-08-11,DGS2,2-Year Treasury Yield,4.22
+2026-08-12,DGS2,2-Year Treasury Yield,4.2
+2026-08-13,DGS2,2-Year Treasury Yield,4.15
+2026-08-14,DGS2,2-Year Treasury Yield,4.17
+2026-08-17,DGS2,2-Year Treasury Yield,4.19
+2026-08-18,DGS2,2-Year Treasury Yield,4.19
+2026-08-19,DGS2,2-Year Treasury Yield,4.19
+2026-08-20,DGS2,2-Year Treasury Yield,4.19
+2026-08-21,DGS2,2-Year Treasury Yield,4.24
+2026-08-24,DGS2,2-Year Treasury Yield,4.24
+2026-08-25,DGS2,2-Year Treasury Yield,4.17
+2026-08-26,DGS2,2-Year Treasury Yield,4.19
+2026-08-27,DGS2,2-Year Treasury Yield,4.2
+2026-08-28,DGS2,2-Year Treasury Yield,4.34
+2026-08-31,DGS2,2-Year Treasury Yield,4.34
+2026-09-01,DGS2,2-Year Treasury Yield,4.39
+2026-09-02,DGS2,2-Year Treasury Yield,4.39
+2026-09-03,DGS2,2-Year Treasury Yield,4.34
 2015-01-01,FEDFUNDS,Federal Funds Rate,0.11
 2015-02-01,FEDFUNDS,Federal Funds Rate,0.11
 2015-03-01,FEDFUNDS,Federal Funds Rate,0.11
@@ -6069,6 +6116,7 @@ Date,SeriesID,SeriesName,Value
 2026-05-01,FEDFUNDS,Federal Funds Rate,3.63
 2026-06-01,FEDFUNDS,Federal Funds Rate,3.63
 2026-07-01,FEDFUNDS,Federal Funds Rate,3.63
+2026-08-01,FEDFUNDS,Federal Funds Rate,3.63
 2015-01-01,GDP,Gross Domestic Product,18063.529
 2015-04-01,GDP,Gross Domestic Product,18279.784
 2015-07-01,GDP,Gross Domestic Product,18401.626
@@ -6114,7 +6162,7 @@ Date,SeriesID,SeriesName,Value
 2025-07-01,GDP,Gross Domestic Product,31098.027
 2025-10-01,GDP,Gross Domestic Product,31422.526
 2026-01-01,GDP,Gross Domestic Product,31865.721
-2026-04-01,GDP,Gross Domestic Product,32475.21
+2026-04-01,GDP,Gross Domestic Product,32486.066
 2018-04-03,SOFR,Secured Overnight Financing Rate,1.83
 2018-04-04,SOFR,Secured Overnight Financing Rate,1.74
 2018-04-05,SOFR,Secured Overnight Financing Rate,1.75
@@ -8197,6 +8245,28 @@ Date,SeriesID,SeriesName,Value
 2026-07-31,SOFR,Secured Overnight Financing Rate,3.66
 2026-08-03,SOFR,Secured Overnight Financing Rate,3.65
 2026-08-04,SOFR,Secured Overnight Financing Rate,3.66
+2026-08-05,SOFR,Secured Overnight Financing Rate,3.64
+2026-08-06,SOFR,Secured Overnight Financing Rate,3.65
+2026-08-07,SOFR,Secured Overnight Financing Rate,3.62
+2026-08-10,SOFR,Secured Overnight Financing Rate,3.63
+2026-08-11,SOFR,Secured Overnight Financing Rate,3.64
+2026-08-12,SOFR,Secured Overnight Financing Rate,3.62
+2026-08-13,SOFR,Secured Overnight Financing Rate,3.62
+2026-08-14,SOFR,Secured Overnight Financing Rate,3.62
+2026-08-17,SOFR,Secured Overnight Financing Rate,3.66
+2026-08-18,SOFR,Secured Overnight Financing Rate,3.65
+2026-08-19,SOFR,Secured Overnight Financing Rate,3.62
+2026-08-20,SOFR,Secured Overnight Financing Rate,3.63
+2026-08-21,SOFR,Secured Overnight Financing Rate,3.65
+2026-08-24,SOFR,Secured Overnight Financing Rate,3.65
+2026-08-25,SOFR,Secured Overnight Financing Rate,3.66
+2026-08-26,SOFR,Secured Overnight Financing Rate,3.64
+2026-08-27,SOFR,Secured Overnight Financing Rate,3.64
+2026-08-28,SOFR,Secured Overnight Financing Rate,3.65
+2026-08-31,SOFR,Secured Overnight Financing Rate,3.68
+2026-09-01,SOFR,Secured Overnight Financing Rate,3.66
+2026-09-02,SOFR,Secured Overnight Financing Rate,3.65
+2026-09-03,SOFR,Secured Overnight Financing Rate,3.66
 2015-01-01,UNRATE,Unemployment Rate,5.7
 2015-02-01,UNRATE,Unemployment Rate,5.5
 2015-03-01,UNRATE,Unemployment Rate,5.4
@@ -8334,3 +8404,5 @@ Date,SeriesID,SeriesName,Value
 2026-04-01,UNRATE,Unemployment Rate,4.3
 2026-05-01,UNRATE,Unemployment Rate,4.3
 2026-06-01,UNRATE,Unemployment Rate,4.2
+2026-07-01,UNRATE,Unemployment Rate,4.1
+2026-08-01,UNRATE,Unemployment Rate,4.1
