@@ -3081,6 +3081,7 @@ Date,SeriesID,SeriesName,Value
 2026-10-05,DGS10,10-Year Treasury Yield,5.31
 2026-10-06,DGS10,10-Year Treasury Yield,5.27
 2026-10-07,DGS10,10-Year Treasury Yield,5.28
+2026-10-08,DGS10,10-Year Treasury Yield,5.22
 2015-01-02,DGS2,2-Year Treasury Yield,0.66
 2015-01-05,DGS2,2-Year Treasury Yield,0.68
 2015-01-06,DGS2,2-Year Treasury Yield,0.65
@@ -6024,6 +6025,7 @@ Date,SeriesID,SeriesName,Value
 2026-10-05,DGS2,2-Year Treasury Yield,4.84
 2026-10-06,DGS2,2-Year Treasury Yield,4.79
 2026-10-07,DGS2,2-Year Treasury Yield,4.77
+2026-10-08,DGS2,2-Year Treasury Yield,4.75
 2015-01-01,FEDFUNDS,Federal Funds Rate,0.11
 2015-02-01,FEDFUNDS,Federal Funds Rate,0.11
 2015-03-01,FEDFUNDS,Federal Funds Rate,0.11
