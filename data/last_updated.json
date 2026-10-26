@@ -1,7 +1,7 @@
 {
-  "updated_at_utc": "2026-10-25T14:04:22.574707+00:00",
-  "updated_at_new_york": "2026-10-25T10:04:22.574707-04:00",
-  "market_rows": 17822,
-  "fred_rows": 8510,
+  "updated_at_utc": "2026-10-26T16:25:59.131005+00:00",
+  "updated_at_new_york": "2026-10-26T12:25:59.131005-04:00",
+  "market_rows": 17828,
+  "fred_rows": 8511,
   "status": "success"
 }
