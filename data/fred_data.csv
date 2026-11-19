@@ -3109,6 +3109,7 @@ Date,SeriesID,SeriesName,Value
 2026-11-12,DGS10,10-Year Treasury Yield,5.1
 2026-11-13,DGS10,10-Year Treasury Yield,5.15
 2026-11-16,DGS10,10-Year Treasury Yield,5.12
+2026-11-17,DGS10,10-Year Treasury Yield,5.1
 2015-01-02,DGS2,2-Year Treasury Yield,0.66
 2015-01-05,DGS2,2-Year Treasury Yield,0.68
 2015-01-06,DGS2,2-Year Treasury Yield,0.65
@@ -6078,6 +6079,7 @@ Date,SeriesID,SeriesName,Value
 2026-11-12,DGS2,2-Year Treasury Yield,4.86
 2026-11-13,DGS2,2-Year Treasury Yield,4.88
 2026-11-16,DGS2,2-Year Treasury Yield,4.83
+2026-11-17,DGS2,2-Year Treasury Yield,4.8
 2015-01-01,FEDFUNDS,Federal Funds Rate,0.11
 2015-02-01,FEDFUNDS,Federal Funds Rate,0.11
 2015-03-01,FEDFUNDS,Federal Funds Rate,0.11
@@ -8421,6 +8423,7 @@ Date,SeriesID,SeriesName,Value
 2026-11-13,SOFR,Secured Overnight Financing Rate,3.9
 2026-11-16,SOFR,Secured Overnight Financing Rate,3.93
 2026-11-17,SOFR,Secured Overnight Financing Rate,3.92
+2026-11-18,SOFR,Secured Overnight Financing Rate,3.9
 2015-01-01,UNRATE,Unemployment Rate,5.7
 2015-02-01,UNRATE,Unemployment Rate,5.5
 2015-03-01,UNRATE,Unemployment Rate,5.4
